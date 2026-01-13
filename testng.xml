@@ -1,0 +1,40 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="TestShop E2E Test Suite" parallel="tests" thread-count="3">
+    <parameter name="baseURL" value="http://localhost:3000"/>
+
+    <!-- Chromium Tests -->
+    <test name="Chromium Tests">
+        <parameter name="browser" value="chromium"/>
+        <classes>
+            <class name="com.bqnow.testshop.tests.SmokeTest"/>
+            <class name="com.bqnow.testshop.tests.HappyPathTest"/>
+            <class name="com.bqnow.testshop.tests.CheckoutValidationTest"/>
+            <class name="com.bqnow.testshop.tests.EdgeCaseTest"/>
+            <class name="com.bqnow.testshop.tests.ApiOptimizationTest"/>
+        </classes>
+    </test>
+
+    <!-- Firefox Tests -->
+    <test name="Firefox Tests">
+        <parameter name="browser" value="firefox"/>
+        <classes>
+            <class name="com.bqnow.testshop.tests.SmokeTest"/>
+            <class name="com.bqnow.testshop.tests.HappyPathTest"/>
+            <class name="com.bqnow.testshop.tests.CheckoutValidationTest"/>
+            <class name="com.bqnow.testshop.tests.EdgeCaseTest"/>
+            <class name="com.bqnow.testshop.tests.ApiOptimizationTest"/>
+        </classes>
+    </test>
+
+    <!-- WebKit Tests (can be disabled via env var if needed, but TestNG runs XML structure) -->
+    <test name="WebKit Tests">
+        <parameter name="browser" value="webkit"/>
+        <classes>
+            <class name="com.bqnow.testshop.tests.SmokeTest"/>
+            <class name="com.bqnow.testshop.tests.HappyPathTest"/>
+            <class name="com.bqnow.testshop.tests.CheckoutValidationTest"/>
+            <class name="com.bqnow.testshop.tests.EdgeCaseTest"/>
+            <class name="com.bqnow.testshop.tests.ApiOptimizationTest"/>
+        </classes>
+    </test>
+</suite>

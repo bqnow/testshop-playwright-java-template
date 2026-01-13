@@ -1,0 +1,42 @@
+name: Verify Test Code (Docker + Maven)
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    name: "Run Tests against App Container"
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Log in to GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Run Tests in Docker
+      env:
+        # These secrets must be set in GitHub Organization Secrets (bqnow)
+        TEST_USER_NAME: ${{ secrets.TEST_USER_NAME }}
+        TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
+        # Pull latest app image from GHCR and test against it
+        BASE_URL: http://app:3000
+        SHOP_IMAGE_TAG: latest
+      run: docker compose up --build --exit-code-from maven
+
+    - name: Upload Test Reports
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-reports
+        path: |
+          target/surefire-reports/
+          target/allure-results/
+        retention-days: 7
