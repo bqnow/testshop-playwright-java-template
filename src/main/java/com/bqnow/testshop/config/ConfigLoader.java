@@ -56,7 +56,7 @@ public class ConfigLoader {
     private String getEnvOrDefault(String key, String defaultValue) {
         // System Env hat höchste Priorität
         String sysEnv = System.getenv(key);
-        if (sysEnv != null) {
+        if (sysEnv != null && !sysEnv.isBlank()) {
             return sysEnv;
         }
         // Dann Dotenv
