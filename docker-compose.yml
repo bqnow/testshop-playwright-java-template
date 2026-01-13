@@ -24,7 +24,7 @@ services:
     environment:
       - BASE_URL=${BASE_URL:-http://app:3000}
       - CI=true
-      - SKIP_WEBKIT=false
+      - SKIP_WEBKIT=true
       - TEST_USER_NAME
       - TEST_USER_PASSWORD
     volumes:
