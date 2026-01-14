@@ -33,6 +33,7 @@ public class ShopPage extends BasePage {
         String productCard = String.format("[data-testid='product-card-%s']", productId);
         page.locator(productCard).getByRole(com.microsoft.playwright.options.AriaRole.LINK,
                 new com.microsoft.playwright.Locator.GetByRoleOptions().setName("View")).click();
+        page.waitForURL("**/products/" + productId);
     }
 
     public void addProductDirectlyToCart(String productId) {

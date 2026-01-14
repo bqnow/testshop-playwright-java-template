@@ -12,10 +12,11 @@ public class ProductDetailPage extends BasePage {
     }
 
     public void addToCart(String productId) {
-        String addButton = String.format("[data-testid='add-to-cart-%s']", productId);
-        // Klick erzwingen (Force), um potenzielle Overlays/Instabilitäten bei hoher
-        // Last (parallele Ausführung) zu umgehen
-        page.click(addButton, new Page.ClickOptions().setForce(true));
+        String addButton = "[data-testid='add-to-cart-large']";
+        // Standard-Klick verwenden, damit Playwright wartet, bis der Button actionable
+        // ist
+        // (verhindert Klicks vor Abschluss der React-Hydration)
+        page.click(addButton);
 
         // Warte explizit darauf, dass der LocalStorage aktualisiert wird,
         // um Race Conditions (besonders in WebKit/Docker) zu vermeiden.

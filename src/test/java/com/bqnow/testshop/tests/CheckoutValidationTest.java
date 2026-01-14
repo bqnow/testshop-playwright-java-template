@@ -58,31 +58,21 @@ public class CheckoutValidationTest extends BaseTest {
         Allure.parameter("Test Szenario", testName);
 
         // Schritt 1: Warenkorb vorbereiten
-        Allure.step("Produkt zum Warenkorb hinzufügen", () -> {
-            shopPage.filterByCategory(PRODUCT_CATEGORY);
-            shopPage.addProductDirectlyToCart(PRODUCT_ID);
-        });
+        shopPage.filterByCategory(PRODUCT_CATEGORY);
+        shopPage.addProductDirectlyToCart(PRODUCT_ID);
 
         // Schritt 2: Zum Checkout navigieren
-        Allure.step("Zum Checkout navigieren", () -> {
-            cartPage.navigateTo();
-            cartPage.proceedToCheckout();
-        });
+        cartPage.navigateTo();
+        cartPage.proceedToCheckout();
 
         // Schritt 3: Formular mit ungültigen Daten füllen
-        Allure.step("Formular mit ungültigen Daten füllen: " + testName, () -> {
-            cartPage.fillShippingDetails(fullName, address, city, zip, email);
-        });
+        cartPage.fillShippingDetails(fullName, address, city, zip, email);
 
         // Schritt 4: Absenden versuchen
-        Allure.step("Bestellung versuchen abzusenden", () -> {
-            cartPage.submitOrder();
-        });
+        cartPage.submitOrder();
 
         // Schritt 5: Validieren, dass spezifisches Feld ungültig ist (HTML5
         // Validierung)
-        Allure.step("Feld-Validierung verifizieren: " + fieldToValidate, () -> {
-            cartPage.expectFieldToBeInvalid(fieldToValidate);
-        });
+        cartPage.expectFieldToBeInvalid(fieldToValidate);
     }
 }

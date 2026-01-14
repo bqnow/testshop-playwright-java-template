@@ -157,4 +157,14 @@ public abstract class BaseTest {
         // Warten bis Navigation abgeschlossen ist
         page.waitForURL("**/");
     }
+
+    @AfterClass
+    public void teardownBrowser() {
+        if (browser != null) {
+            browser.close();
+        }
+        if (playwright != null) {
+            playwright.close();
+        }
+    }
 }

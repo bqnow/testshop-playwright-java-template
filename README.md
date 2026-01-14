@@ -216,6 +216,7 @@ Dieses Template demonstriert:
 *   **Maven Build Fehler**: Prüfe Java-Version: `java -version` (muss 17+ sein)
 *   **Docker Fehler**: Sauberer Neustart: `docker compose down && docker compose up --build`
 *   **Report öffnet sich nicht**: Stelle sicher, dass Browser installiert ist
+*   **Hohe "Skipped"-Zahl im Docker**: Das ist normal. Wenn `SKIP_WEBKIT=true` gesetzt ist (Standard in Docker), werden WebKit-Tests übersprungen. TestNG zählt dabei auch die Konfigurationsmethoden (`@BeforeClass`, `@AfterClass`) als "skipped", was die Zahl künstlich erhöht. Die wichtigen Metriken sind **Failures: 0** und **Errors: 0**.
 
 ---
 
