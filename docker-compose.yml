@@ -1,6 +1,6 @@
 services:
 
-  # The TestShop application (pull from GHCR)
+  # Die TestShop-Anwendung (von GHCR ziehen)
   app:
     image: ghcr.io/bqnow/testshop:${SHOP_IMAGE_TAG:-latest}
     ports:
@@ -13,7 +13,7 @@ services:
       timeout: 5s
       retries: 5
 
-  # Maven test runner with Playwright Java
+  # Maven Test-Runner mit Playwright Java
   maven:
     build:
       context: .
@@ -25,7 +25,11 @@ services:
       - BASE_URL=${BASE_URL:-http://app:3000}
       - CI=true
       - SKIP_WEBKIT=true
+      - TEST_ENV
       - TEST_USER_NAME
       - TEST_USER_PASSWORD
+      - GRAFANA_LOKI_URL
+      - GRAFANA_LOKI_USER
+      - GRAFANA_LOKI_KEY
     volumes:
       - ./target:/app/target

@@ -186,6 +186,19 @@ Nach jedem `mvn test` findest du die Berichte unter:
 *   `target/surefire-reports/` (XML/TXT)
 *   `target/allure-results/` (Allure Rohdaten)
 
+### Grafana Loki Integration (Live Metrics)
+Zusätzlich zu Allure sendet dieses Framework **Live-Metriken** an Grafana Loki. Dies ermöglicht Echtzeit-Dashboards für Test-Stabilität und Performance.
+
+**Konfiguration (via Environment Variablen):**
+Um das Reporting zu aktivieren, müssen folgende Variablen gesetzt sein (z.B. in `.env` oder CI-Secrets):
+*   `GRAFANA_LOKI_URL`: URL zur Loki-Instanz
+*   `GRAFANA_LOKI_USER`: Username / Tenant ID
+*   `GRAFANA_LOKI_KEY`: API Key / Password
+*   `GRAFANA_APP_NAME`: Name der App im Dashboard (Default: `testshop-java`)
+*   `TEST_ENV`: Umgebung, z.B. `local`, `staging`, `prod`
+
+Die Metriken umfassen Status, Dauer, Browser und Fehlermeldungen pro Testfall und sind 100% kompatibel mit dem TypeScript-Dashboard.
+
 ---
 
 ## 🤖 CI/CD Integration

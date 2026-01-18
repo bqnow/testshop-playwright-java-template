@@ -23,12 +23,16 @@ jobs:
 
     - name: Run Tests in Docker
       env:
-        # These secrets must be set in GitHub Organization Secrets (bqnow)
+        # Diese Secrets müssen in den GitHub Organization Secrets (bqnow) gesetzt sein
         TEST_USER_NAME: ${{ secrets.TEST_USER_NAME }}
         TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
-        # Pull latest app image from GHCR and test against it
+        # Neuestes App-Image von GHCR ziehen und dagegen testen
         BASE_URL: http://app:3000
         SHOP_IMAGE_TAG: latest
+        TEST_ENV: ci_template_check
+        GRAFANA_LOKI_URL: ${{ secrets.GRAFANA_LOKI_URL }}
+        GRAFANA_LOKI_USER: ${{ secrets.GRAFANA_LOKI_USER }}
+        GRAFANA_LOKI_KEY: ${{ secrets.GRAFANA_LOKI_KEY }}
       run: docker compose up --build --exit-code-from maven
 
     - name: Upload Test Reports

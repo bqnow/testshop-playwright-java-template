@@ -2,6 +2,10 @@
 <suite name="TestShop E2E Test Suite" parallel="tests" thread-count="1">
     <parameter name="baseURL" value="http://localhost:3000"/>
 
+    <listeners>
+        <listener class-name="com.bqnow.testshop.reporting.GrafanaReporter"/>
+    </listeners>
+
     <!-- Chromium Tests -->
     <test name="Chromium Tests">
         <parameter name="browser" value="chromium"/>

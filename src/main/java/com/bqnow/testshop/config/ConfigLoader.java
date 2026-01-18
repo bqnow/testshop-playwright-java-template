@@ -36,6 +36,7 @@ public class ConfigLoader {
                 .directory(configDir.toString())
                 .filename(envFile)
                 .ignoreIfMissing()
+                .ignoreIfMalformed()
                 .load();
 
         // Konfigurationswerte laden mit Priorität: System Env > .env Dateien
@@ -53,7 +54,17 @@ public class ConfigLoader {
         return instance;
     }
 
-    private String getEnvOrDefault(String key, String defaultValue) {
+    /**
+     * Ruft einen Konfigurationswert ab.
+     * 
+     * @param key Schlüssel
+     * @return Wert oder null
+     */
+    public static String get(String key) {
+        return getInstance().getEnvOrDefault(key, null);
+    }
+
+    public String getEnvOrDefault(String key, String defaultValue) {
         // System Env hat höchste Priorität
         String sysEnv = System.getenv(key);
         if (sysEnv != null && !sysEnv.isBlank()) {

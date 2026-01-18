@@ -1,34 +1,34 @@
-# Multi-stage Dockerfile for Playwright Java tests
+# Mehrstufiges Dockerfile für Playwright Java Tests
 
-# Stage 1: Build dependencies
+# Stufe 1: Abhängigkeiten bauen
 FROM maven:3.9-eclipse-temurin-17 AS build
 WORKDIR /app
 
-# Copy POM and download dependencies (layer caching)
+# POM kopieren und Abhängigkeiten herunterladen (Layer-Caching)
 COPY pom.xml ./
 RUN mvn dependency:go-offline -B
 
-# Copy source code
+# Quellcode kopieren
 COPY src ./src
 COPY testng.xml ./
 COPY config ./config
 
-# Stage 2: Runtime with Playwright browsers
+# Stufe 2: Laufzeitumgebung mit Playwright Browsern
 FROM mcr.microsoft.com/playwright/java:v1.49.0-jammy
 
 WORKDIR /app
 
-# Install Maven
+# Maven installieren
 RUN apt-get update && apt-get install -y maven && rm -rf /var/lib/apt/lists/*
 
-# Copy from build stage
+# Aus der Build-Stufe kopieren
 COPY --from=build /app ./
 COPY --from=build /root/.m2 /root/.m2
 
-# Environment variables for CI
+# Umgebungsvariablen für CI
 ENV CI=true
 ENV SKIP_WEBKIT=true
 ENV HEADLESS=true
 
-# Run tests
+# Tests ausführen
 CMD ["mvn", "test"]
